@@ -1,4 +1,6 @@
-# Chat2
+# Chat
+
+This is my first elixir application that was made with a help of https://www.youtube.com/watch?v=fyg0FuSL5DY&t=742s.
 
 To start your Phoenix server:
 
