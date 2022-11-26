@@ -14,7 +14,7 @@ defmodule Chat2Web.RoomLive do
       topic: topic,
       username: username,
       message: "",
-      messages: [%{uuid: UUID.uuid4(), content: "#{username} joined the chat"}],
+      messages: [%{uuid: UUID.uuid4(), content: "#{username} joined the chat", username: "system"}],
       temporary_assigns: [messages: []])
     }
   end
@@ -22,14 +22,14 @@ defmodule Chat2Web.RoomLive do
   # Handling of form submit action
   @impl true
   def handle_event("submit_message", %{"chat" => %{"message" => message}}, socket) do
-    message = %{uuid: UUID.uuid4(), content: message}
+    message = %{uuid: UUID.uuid4(), content: message, username: socket.assigns.username}
     Chat2Web.Endpoint.broadcast(socket.assigns.topic, "new-message", message)
     {:noreply, assign(socket, message: "")}
   end
 
-  # Clearing up the form
+  #  Clearing up the form
   @impl true
-  def handle_event("form_changed", %{"chat" => %{"message" => message}}, socket) do
+  def handle_event("form_update", %{"chat" => %{"message" => message}}, socket) do
     {:noreply, assign(socket, message: message)}
   end
 
